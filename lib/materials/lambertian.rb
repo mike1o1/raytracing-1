@@ -17,8 +17,6 @@ module Materials
       @attenuation = albedo
 
       true
-
-      true
     end
   end
 end

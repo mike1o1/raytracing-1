@@ -14,16 +14,16 @@ module Materials
       refraction_ratio = hit_record.front_face ? (1.0 / index_of_refraction) : index_of_refraction
 
       cos_theta = [(-ray_in.unit_vector).dot(hit_record.normal), 1.0].min
-      sin_theta = Math.sqrt(1.0 - cos_theta ** 2)
+      sin_theta = Math.sqrt(1.0 - cos_theta**2)
 
       cannot_refract = refraction_ratio * sin_theta > 1.0
       random_reflect = reflectance(cos_theta, refraction_ratio) > rand
 
       direction = if cannot_refract || random_reflect
-                    reflect(ray_in.unit_vector, hit_record.normal)
-                  else
-                    refract(ray_in.unit_vector, hit_record.normal, refraction_ratio)
-                  end
+        reflect(ray_in.unit_vector, hit_record.normal)
+      else
+        refract(ray_in.unit_vector, hit_record.normal, refraction_ratio)
+      end
 
       @scattered = Ray.new(hit_record.point, direction)
       @attenuation = Color.white
@@ -37,7 +37,7 @@ module Materials
       r0 = (1.0 - refractive_index) / (1.0 + refractive_index)
       r0 **= 2
 
-      r0 + (1.0 - r0) * (1.0 - cosine) ** 5
+      r0 + (1.0 - r0) * (1.0 - cosine)**5
     end
   end
 end

@@ -1,7 +1,6 @@
 require_relative "vector3d"
 require_relative "point"
 require_relative "utilities/utilities"
-require "byebug"
 
 class Camera
   include Utilities
@@ -9,7 +8,7 @@ class Camera
   attr_reader :look_from
   attr_reader :look_at
   attr_reader :v_up
-  attr_reader :vertical_pov
+  attr_reader :vertical_fov
   attr_reader :aspect_ratio
   attr_reader :height
   attr_reader :width
@@ -25,7 +24,7 @@ class Camera
     @look_at = look_at
 
     @v_up = options[:v_up] || Vector3d.new(0, 1, 0)
-    @vertical_pov = options[:vertical_pov] || 90.0
+    @vertical_fov = options[:vertical_fov] || 90.0
     @aspect_ratio = options[:aspect_ratio] || 16.0 / 9.0
     @height = options[:height] || 2.0 * Math.tan(theta / 2.0)
     @width = options[:width] || aspect_ratio * height
@@ -36,13 +35,11 @@ class Camera
     set_coordinate_instance_vars
   end
 
-  def get_ray(u, v)
+  def get_ray(s, t)
     offset_vector = Vector3d.random_in_unit_disk * lens_radius
     offset = u * offset_vector.x + v * offset_vector.y
 
-    Ray.new(origin, lower_left + (horizontal * u) + (vertical * v) - origin)
-
-    # Ray.new(origin + offset, ray_direction(s, t, offset))
+    Ray.new(origin + offset, ray_direction(s, t, offset))
   end
 
   def image_dimensions(image_width)
@@ -85,6 +82,6 @@ class Camera
   end
 
   def theta
-    degrees_to_radians(vertical_pov)
+    degrees_to_radians(vertical_fov)
   end
 end

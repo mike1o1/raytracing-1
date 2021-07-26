@@ -8,7 +8,8 @@ module Materials
       @albedo = albedo
     end
 
-    def scatter?(*args) end
+    def scatter?(*args)
+    end
 
     private
 
@@ -23,7 +24,5 @@ module Materials
 
       r_out_perp + r_out_parallel
     end
-
   end
 end
-

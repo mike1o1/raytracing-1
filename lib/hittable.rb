@@ -9,6 +9,7 @@ class HitRecord
     @point = point
     @normal = normal
     @t = t
+    @front_face = false
     @material = material
   end
 
@@ -31,7 +32,8 @@ class Hittable
     @hit_record = hit_record
   end
 
-  def hit?(ray, t_min, t_max, hit_record) end
+  def hit?(ray, t_min, t_max, hit_record)
+  end
 end
 
 class HittableList
@@ -55,11 +57,11 @@ class HittableList
     closest_so_far = t_max
 
     objects.each do |object|
-      next unless object.hit?(ray, t_min, closest_so_far, temp_record)
+      next unless object.hit?(ray, t_min, t_max, temp_record)
 
       hit_anything = true
       closest_so_far = temp_record.t
-      set_hit_from_temp(hit_record, temp_record)
+      set_hit_from_temp(hit_record, temp_record) if hit_record.t.nil? || closest_so_far <= hit_record.t
     end
 
     hit_anything

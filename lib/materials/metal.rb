@@ -16,8 +16,8 @@ module Materials
     end
 
     def scatter?(ray_in, hit_record)
-      reflected    = reflect(ray_in.unit_vector, hit_record.normal)
-      @scattered   = Ray.new(hit_record.point, reflected + Vector3d.random_in_unit_sphere * fuzz)
+      reflected = reflect(ray_in.unit_vector, hit_record.normal)
+      @scattered = Ray.new(hit_record.point, reflected + Vector3d.random_in_unit_sphere * fuzz)
       @attenuation = albedo
 
       @scattered.direction.dot(hit_record.normal).positive?

@@ -39,7 +39,7 @@ class Vector3d
   end
 
   def length_squared
-    x ** 2 + y ** 2 + z ** 2
+    x**2 + y**2 + z**2
   end
 
   def to_s
@@ -96,16 +96,14 @@ class Vector3d
     end
   end
 
-  def self.random(*args)
-    case args.reject(&:nil?).count
-    when 0
-      Vector3d.new(rand, rand, rand)
-    when 2
-      min, max = args.map(&:to_f)
-      Vector3d.new(rand(min..max), rand(min..max), rand(min..max))
-    else
-      nil
+  def self.random(min = nil, max = nil)
+    if min.nil? && max.nil?
+      return Vector3d.new(rand, rand, rand)
     end
 
+    min = min.to_f
+    max = max.to_f
+
+    Vector3d.new(rand(min..max), rand(min..max), rand(min..max))
   end
 end

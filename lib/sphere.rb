@@ -15,8 +15,8 @@ class Sphere < Hittable
     oc = ray.origin - center
     a = ray.direction.length_squared
     half_b = oc.dot(ray.direction)
-    c = oc.length_squared - (radius ** 2)
-    discriminant = (half_b ** 2) - (a * c)
+    c = oc.length_squared - (radius**2)
+    discriminant = (half_b**2) - (a * c)
 
     return false if discriminant.negative?
 

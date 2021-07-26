@@ -18,13 +18,13 @@ class Image
 
   attr_reader :file
 
-  def initialize(image_width = 256, image_height = 256, camera, world)
+  def initialize(image_width, image_height, camera, world)
     @image_width = image_width
     @image_height = image_height
     @camera = camera
     @world = world
 
-    File.delete(IMAGE_PATH) if File.exists?(IMAGE_PATH)
+    File.delete(IMAGE_PATH) if File.exist?(IMAGE_PATH)
 
     @file = nil
   end
@@ -41,7 +41,6 @@ class Image
         color = Color.new(0, 0, 0)
 
         (0..SAMPLES_PER_PIXEL - 1).each do
-
           u = (x.to_f + rand) / (image_width - 1)
           v = (y.to_f + rand) / (image_height - 1)
 
