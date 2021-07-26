@@ -9,9 +9,7 @@ require_relative "./lib/materials/lambertian"
 require_relative "./lib/materials/metal"
 require_relative "./lib/materials/dielectric"
 
-ASPECT_RATIO = 16.0 / 9.0
 IMAGE_WIDTH = 1024
-IMAGE_HEIGHT = (IMAGE_WIDTH / ASPECT_RATIO).to_i
 
 def random_scene
   # Set up the world
@@ -67,18 +65,6 @@ def random_scene
 end
 
 class Main
-  VIEWPORT_HEIGHT = 2.0
-  VIEWPORT_WIDTH = ASPECT_RATIO * VIEWPORT_HEIGHT
-
-  attr_accessor :viewport_height
-  attr_accessor :viewport_width
-  attr_accessor :focal_length
-
-  attr_accessor :origin
-  attr_accessor :horizontal
-  attr_accessor :vertical
-  attr_accessor :lower_left_corner
-
   def render
     world = random_scene
 
@@ -91,7 +77,9 @@ class Main
       focus_dist: 10.0
     )
 
-    image = Image.new(IMAGE_WIDTH, IMAGE_HEIGHT, camera, world)
+    width, height = camera.image_dimensions(IMAGE_WIDTH)
+
+    image = Image.new(width, height, camera, world)
     image.render
   end
 end
